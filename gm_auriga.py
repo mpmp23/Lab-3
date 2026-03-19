@@ -43,7 +43,7 @@ Sumstar=0
 Sumdisk=0
 
 #define some values for the Planck function
- 
+
 def PlanckLaw(T, wave):
     c=1.1927*10**-16 #2hc^2
     d=.014394135  #hc/Kb
@@ -67,11 +67,29 @@ for i in range(0, wstepNumber):
     wave= wave + wstep
     Sumdisk=Fdisk[i]+Sumdisk
 
+
  
 # NORMALIZE ALL THE FLUXES and scale disk flux strength to DScale
 Fstar=np.array(Fstar)/Sumstar
 Fdisk=Dscale*np.array(Fdisk)/Sumdisk
 Ftotal= Fstar + Fdisk
+
+# DATA POINTS FOR GM AUR, wavelength in microns, lambda Flambda in ergs/s/cm^2
+ 
+GMAur_L=[0.36890015, 0.45258972  ,5.86E-01  ,  0.666506  ,  1.3083931  ,  1.7492352 ,   2.2092927 ,   3.6587987  , 4.4578514, 5.849414,  12.335447  ,  27.036976  ,  62.506542  ,  107.64069 ,   631.3774 ,   1079.9856]
+GMAur_F=[7.08E-11, 1.75E-10, 3.36E-10 , 5.01E-10 , 6.91E-10 , 6.08E-10 , 3.32E-10 ,1.24E-10 , 8.89E-11, 4.87E-11, 6.36E-11 , 1.10E-10  , 1.47E-10  , 9.55E-11  , 6.20E-12  , 1.01E-12 ]
+## Flux (F) at given wavelengths (L)
+##Make the flux match at relevant wavelengths
+##you have to match it to the <1 microns and say that that is ONLY the sun's impact.
+
+####### My attempt at repeating the process for GMAur #######
+##First, we must normalize!!
+
+C = Ftotal/GMAur_F
+
+GMAur_F= C*np.array(GMAur_F) #Scale the GM Aur fluxes to match model SED fluxes at ~0.35 micron
+
+##Back to lab notes
 
 # Change wavelengths to microns, and define new arrays that equal "lambdaxF_lambda"
 wavePlot=np.array(wavePlot)*10**6
@@ -82,6 +100,7 @@ LFtotal=np.array(Ftotal)*np.array(wavePlot)
 plt.plot(wavePlot,np.log10(LFdisk), label="flared disk")
 plt.plot(wavePlot,np.log10(LFstar), label="star")
 plt.plot(wavePlot,np.log10(LFtotal), label="disk plus star")
+plt.plot(wavePlot,np.log10(GMAur_F), label="GMAur_F")
 plt.xlim([.1,2000])
 plt.xscale('log')
 plt.ylim([-10,0])
@@ -89,4 +108,5 @@ plt.legend(loc='best',prop={'size': 10})
 plt.xlabel('wavelength (lambda)')
 plt.ylabel('Flux normalized with lambda')
 plt.show()
+
 
