@@ -7,10 +7,10 @@ import re
  
 #Define the power law, scaling for the disk emission, and number of radial steps from .07 AU to 200. AU, with step size .05 AU
 tpow=-0.5	#defines the power law for the disk temperature profile
-Dscale=0.25   #scales the strength of the disk emission relative to the star
+Dscale=0.35   #scales the strength of the disk emission relative to the star
 Rstepsize=0.05   #the width of each annulus in AU
-Rsub=0.07    #the sublimation radius
-Rend=200  #ending the disk at 200AU
+Rsub=0.07   #the sublimation radius
+Rend=300  #ending the disk at 300AU
 RstepNumber= int(round( (Rend-Rsub)/Rstepsize  ) ) #Gives integer number of steps from 0.7-200 AU
  
 #Define numpy arrays for starting radius, area, and temperature of each annulus, then fill the arrays
@@ -18,7 +18,7 @@ R=[] # range(RstepNumber)  # will be inner radius of annulus
 Area=[] #=range(RstepNumber-1) # area of annulus , since total lum  ~ I x area
 Temp=[] #=range(RstepNumber-1) #Average temperature of our annuli
 
-Rdisk = Rsub
+Rdisk = 4
 for j in range(0,RstepNumber):
   R.append(Rdisk)
   Rdisk= Rdisk + Rstepsize
@@ -31,7 +31,7 @@ for j in range(0,RstepNumber-1):
   #***** FLUX FROM DISK *************
  
 wstart=10e-9  # starting wavelength in m
-wend=500e-6   #end wavelength in m
+wend=1000e-6   #end wavelength in m
 wstep =100e-9  #step for wavelength in m
 wstepNumber=int(round( (wend-wstart)/wstep) )
  
@@ -76,9 +76,7 @@ Ftotal= Fstar + Fdisk
 
 # DATA POINTS FOR GM AUR, wavelength in microns, lambda Flambda in ergs/s/cm^2
  
-#GMAur_L=[0.36890015,0.45258972,5.86E-01,0.666506,1.3083931,1.7492352,2.2092927,3.6587987,4.4578514,5.849414,12.335447,27.036976,62.506542,107.64069,631.3774,1079.9856]
 GMAur_L=[0.36890015,0.45258972,5.86e-01,0.666506,1.3083931,1.7492352,2.2092927,3.6587987,4.4578514,5.849414,12.335447,27.036976,62.506542,107.64069,631.3774,1079.9856]
-#GMAur_F=[7.08E-11,1.75E-10,3.36E-10,5.01E-10,6.91E-10,6.08E-10,3.32E-10,1.24E-10,8.89E-11,4.87E-11,6.36E-11,1.10E-10,1.47E-10,9.55E-11,6.20E-12,1.01E-12]
 GMAur_F=[7.08e-11,1.75e-10,3.36e-10,5.01e-10,6.91e-10,6.08e-10,3.32e-10,1.24e-10,8.89e-11,4.87e-11,6.36e-11,1.10e-10,1.47e-10,9.55e-11,6.20e-12,1.01e-12]
 print(GMAur_F)
 print(GMAur_L)
@@ -115,15 +113,14 @@ LFdisk=np.array(Fdisk)*np.array(wavePlot)
 LFstar=np.array(Fstar)*np.array(wavePlot)
 LFtotal=np.array(Ftotal)*np.array(wavePlot)
  
-plt.plot(wavePlot,np.log10(LFdisk), label="flared disk")
-plt.plot(wavePlot,np.log10(LFstar), label="star")
-plt.plot(wavePlot,np.log10(LFtotal), label="disk plus star")
-plt.plot(GMAur_L,np.log10(GMAur_F), label="GMAur_F")
+plt.plot(wavePlot,np.log10(LFdisk), label="Flared Disk")
+plt.plot(wavePlot,np.log10(LFstar), label="Star")
+plt.plot(wavePlot,np.log10(LFtotal), label="Disk Plus Star")
+plt.plot(GMAur_L,np.log10(GMAur_F), label="GMAuriga Flux")
 plt.xlim([.1,2000])
 plt.xscale('log')
 plt.ylim([-10,0])
 plt.legend(loc='best',prop={'size': 10})
-plt.xlabel('wavelength (lambda)')
-plt.ylabel('Flux normalized with lambda')
+plt.xlabel('Wavelength (λ)')
+plt.ylabel('Flux Normalized with Lambda')
 plt.show()
-
