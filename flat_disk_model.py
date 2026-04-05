@@ -5,14 +5,15 @@ import re
 
 #****************************** Disk Parameters****************************************
  
-#Define the power law, scaling for the disk emission, and number of radial steps from .07 AU to 200. AU, with step size .05 AU
+#Define the power law, scaling for the disk emission, and number of radial steps from 
+# .07 AU to 200. AU, with step size .05 AU
 tpow=-0.75	#defines the power law for the disk temperature profile
 Dscale=0.25   #scales the strength of the disk emission relative to the star
 Rstepsize=0.05   #the width of each annulus in AU
-Rsub=0.07    #the sublimation radius
+Rsub=1.5    #the sublimation radius
 Rend=200  #ending the disk at 200AU
-RstepNumber= int(round( (Rend-Rsub)/Rstepsize  ) ) #Gives integer number of steps from 0.7-200 AU
- 
+RstepNumber= int(round( (Rend-Rsub)/Rstepsize  ) ) #Gives integer number of steps from 0.07-200 AU
+
 #Define numpy arrays for starting radius, area, and temperature of each annulus, then fill the arrays
 R=[] # range(RstepNumber)  # will be inner radius of annulus
 Area=[] #=range(RstepNumber-1) # area of annulus , since total lum  ~ I x area
@@ -28,8 +29,8 @@ for j in range(0,RstepNumber-1):
   Rmid= (R[j+1] + R[j])/2.0
   Temp.append(1800*(Rmid/Rsub)**(tpow))
 
-  #***** FLUX FROM DISK *************
- 
+#***** FLUX FROM DISK *************
+
 wstart=10e-9  # starting wavelength in m
 wend=500e-6   #end wavelength in m
 wstep =100e-9  #step for wavelength in m
@@ -43,7 +44,7 @@ Sumstar=0
 Sumdisk=0
 
 #define some values for the Planck function
- 
+
 def PlanckLaw(T, wave):
     c=1.1927*10**-16 #2hc^2
     d=.014394135  #hc/Kb
@@ -89,3 +90,4 @@ plt.legend(loc='best',prop={'size': 10})
 plt.xlabel('wavelength (lambda)')
 plt.ylabel('Flux normalized with lambda')
 plt.show()
+

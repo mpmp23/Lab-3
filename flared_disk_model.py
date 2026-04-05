@@ -5,7 +5,8 @@ import re
 
 #****************************** Disk Parameters****************************************
  
-#Define the power law, scaling for the disk emission, and number of radial steps from .07 AU to 200. AU, with step size .05 AU
+#Define the power law, scaling for the disk emission, and number of radial steps from
+#.07 AU to 200. AU, with step size .05 AU
 tpow=-0.5	#defines the power law for the disk temperature profile
 Dscale=0.25   #scales the strength of the disk emission relative to the star
 Rstepsize=0.05   #the width of each annulus in AU

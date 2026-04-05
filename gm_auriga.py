@@ -80,8 +80,8 @@ Ftotal= Fstar + Fdisk
 GMAur_L=[0.36890015,0.45258972,5.86e-01,0.666506,1.3083931,1.7492352,2.2092927,3.6587987,4.4578514,5.849414,12.335447,27.036976,62.506542,107.64069,631.3774,1079.9856]
 #GMAur_F=[7.08E-11,1.75E-10,3.36E-10,5.01E-10,6.91E-10,6.08E-10,3.32E-10,1.24E-10,8.89E-11,4.87E-11,6.36E-11,1.10E-10,1.47E-10,9.55E-11,6.20E-12,1.01E-12]
 GMAur_F=[7.08e-11,1.75e-10,3.36e-10,5.01e-10,6.91e-10,6.08e-10,3.32e-10,1.24e-10,8.89e-11,4.87e-11,6.36e-11,1.10e-10,1.47e-10,9.55e-11,6.20e-12,1.01e-12]
-print(GMAur_F)
-print(GMAur_L)
+#print(GMAur_F)
+#print(GMAur_L)
 
 GMAur_Ffixed = np.array(GMAur_F, dtype=np.float64)
 
@@ -93,11 +93,13 @@ GMAur_Ffixed = np.array(GMAur_F, dtype=np.float64)
 ##First, we must normalize!!
 
 ##C = Ftotal/GMAur_F
-##I'm going to choose the first GMAur_L point for my ~.35 micron point, and the first GMAur_F point for my relative flux at that point.
+##I'm going to choose the first GMAur_L point for my ~.35 micron point, and the
+# first GMAur_F point for my relative flux at that point.
 C = Ftotal[3]/GMAur_F[0]
+print(C) # 115821482.79139154
 
 #print(wavePlot[35]) ## this is the array i found initially. it's 10x too big
-print(wavePlot[3]) ## so the relative flux is Ftotal[3]
+#print(wavePlot[3]) ## so the relative flux is Ftotal[3]
 
 
 ## i played around with the range here, frmo printing the whole array, to limiting it lower and higher.
